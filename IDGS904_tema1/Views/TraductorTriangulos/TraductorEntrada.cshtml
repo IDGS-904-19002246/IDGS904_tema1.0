@@ -1,0 +1,114 @@
+﻿@model IDGS904_tema1.Models.TraductorEntrada
+
+@{
+    ViewBag.Title = "TraductorEntrada";
+}
+
+@*  EKILATERO
+    0,0
+    1,0
+    0.5,0.866
+
+    0,0
+    6,0
+    3,5.1965
+*@
+
+@*ISOSRELES
+    -1,0s
+    1,0
+    0,-1
+*@
+
+@*ESCALENO
+    0,0
+    2,0
+    5,2
+*@
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("TraductorEntrada", "TraductorTriangulos", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Guardar Palabra</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ESP, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ESP, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.ESP, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ING, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ING, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.ING, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <br />
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        @using (Html.BeginForm("TraductorSalida", "TraductorTriangulos", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Traducir Palabra</h4>
+                <hr />
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PAL, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PAL, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.PAL, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IDIOMA, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.RadioButtonFor(model => model.IDIOMA, "1")@Html.Label("Convertir a Español")
+                        <br />
+                        @Html.RadioButtonFor(model => model.IDIOMA, "2")@Html.Label("Convertir a Ingles")
+                        <br />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <br />
+                        <input type="submit" value="Consultar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-6">
+        <h2>Diccionario Ingles-Español</h2>
+        <table class="table text-light">
+            <tr class="bg-dark">
+                <th>Español</th>
+                <th>Ingles</th>
+            </tr>
+            @for (int i = 0; i < @ViewBag.E.Length; i++)
+            {
+                <tr>
+                    <td>@ViewBag.E.GetValue(i)</td>
+                    <td>@ViewBag.I.GetValue(i)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
